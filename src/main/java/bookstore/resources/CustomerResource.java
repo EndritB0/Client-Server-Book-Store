@@ -1,11 +1,14 @@
 package bookstore.resources;
 
+import bookstore.dao.CustomerDAO;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
@@ -14,6 +17,8 @@ import javax.ws.rs.core.Response;
  */
 @Path("/customers")
 public class CustomerResource {
+    
+    CustomerDAO customerDAO = new CustomerDAO();
 
     @POST
     public Response addCustomer() {
@@ -21,8 +26,9 @@ public class CustomerResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getCustomers() {
-        return Response.ok().build();
+        return Response.status(Response.Status.OK).entity(customerDAO.getAllCustomers()).build();
     }
 
     @GET
