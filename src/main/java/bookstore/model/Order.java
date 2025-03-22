@@ -9,17 +9,15 @@ import java.util.List;
 public class Order {
 
     private String id;
-    private Customer customer;
-    private List<Book> books;
+    private List<Item> items;
     private double totalPrice;
 
     public Order() {
     }
 
-    public Order(String id, Customer customer, List<Book> books, double totalPrice) {
+    public Order(String id, List<Item> items, double totalPrice) {
         this.id = id;
-        this.customer = customer;
-        this.books = books;
+        this.items = items;
         this.totalPrice = totalPrice;
     }
 
@@ -31,20 +29,12 @@ public class Order {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public double getTotalPrice() {

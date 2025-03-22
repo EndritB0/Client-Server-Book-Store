@@ -1,6 +1,9 @@
 package bookstore.resources;
 
 import bookstore.dao.OrderDAO;
+import bookstore.model.Order;
+import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,28 +18,31 @@ import javax.ws.rs.core.Response;
  */
 @Path("/customers/{customerId}/orders")
 public class OrderResource {
-    
+
     OrderDAO orderDAO = new OrderDAO();
 
     @POST
-    public Response createOrder(@PathParam("customerId") String customerId) {
-        // TODO: Implement logic to create a new order
-        return Response.status(Response.Status.CREATED).build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createOrder(@PathParam("customerId") String id) {
+        Order order = orderDAO.createOrderFromCustomer(id);
+        return Response.status(Response.Status.CREATED).entity(order).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOrders(@PathParam("customerId") String customerId) {
-        // TODO: Implement logic to retrieve all orders for a customer
-        return Response.status(Response.Status.OK).entity(orderDAO.getAllOrders()).build();
+    public Response getAllOrdersByCustomer(@PathParam("customerId") String id) {
+        List<Order> orders = orderDAO.getAllOrdersByCustomer(id);
+        return Response.ok(orders).build();
     }
 
     @GET
     @Path("/{orderId}")
-    public Response getOrder(
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOrderByCustomerId(
             @PathParam("customerId") String customerId,
             @PathParam("orderId") String orderId) {
-        // TODO: Implement logic to retrieve a specific order by ID
-        return Response.ok().build();
+        Order order = orderDAO.getOrderByCustomerId(customerId, orderId);
+        return Response.ok(order).build();
     }
 }

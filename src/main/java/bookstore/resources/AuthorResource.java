@@ -1,6 +1,10 @@
 package bookstore.resources;
 
 import bookstore.dao.AuthorDAO;
+import bookstore.model.Author;
+import bookstore.model.Book;
+import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,40 +21,52 @@ import javax.ws.rs.core.Response;
  */
 @Path("/authors")
 public class AuthorResource {
+
     private AuthorDAO authorDAO = new AuthorDAO();
 
     @POST
-    public Response addAuthor() {
-        return Response.status(Response.Status.CREATED).build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createAuthor(Author newAuthor) {
+        Author author = authorDAO.createAuthor(newAuthor);
+        return Response.status(Response.Status.CREATED).entity(author).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAuthors() {
-        return Response.status(Response.Status.OK).entity(authorDAO.getAllAuthors()).build();
+    public Response getAllAuthors() {
+        return Response.ok(authorDAO.getAllAuthors()).build();
     }
 
     @GET
     @Path("/{id}")
-    public Response getAuthor(@PathParam("id") String id) {
-        return Response.ok().build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAuthorById(@PathParam("id") String id) {
+        Author author = authorDAO.getAuthorById(id);
+        return Response.ok(author).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response updateAuthor(@PathParam("id") String id) {
-        return Response.ok().build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAuthor(@PathParam("id") String id, Author updatedAuthor) {
+        Author author = authorDAO.updateAuthor(id, updatedAuthor);
+        return Response.ok(author).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteAuthor(@PathParam("id") String id) {
+        authorDAO.deleteAuthor(id);
         return Response.noContent().build();
     }
 
     @GET
     @Path("/{id}/books")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getBooksByAuthor(@PathParam("id") String id) {
-        return Response.ok().build();
+        List<Book> books = authorDAO.getBooksByAuthor(id);
+        return Response.ok(books).build();
     }
 }

@@ -1,6 +1,8 @@
 package bookstore.resources;
 
 import bookstore.dao.CustomerDAO;
+import bookstore.model.Customer;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,35 +19,67 @@ import javax.ws.rs.core.Response;
  */
 @Path("/customers")
 public class CustomerResource {
-    
+
     CustomerDAO customerDAO = new CustomerDAO();
 
     @POST
-    public Response addCustomer() {
-        return Response.status(Response.Status.CREATED).build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createCustomer(Customer newCustomer) {
+        try {
+            Customer customer = customerDAO.createCustomer(newCustomer);
+            return Response.status(Response.Status.CREATED).entity(customer).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCustomers() {
-        return Response.status(Response.Status.OK).entity(customerDAO.getAllCustomers()).build();
+    public Response getAllCustomers() {
+        return Response.ok(customerDAO.getAllCustomers()).build();
     }
 
     @GET
     @Path("/{id}")
-    public Response getCustomer(@PathParam("id") String id) {
-        return Response.ok().build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCustomerById(@PathParam("id") String id) {
+        try {
+            Customer customer = customerDAO.getCustomerById(id);
+            return Response.ok(customer).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Customer not found").build();
+        }
     }
 
     @PUT
     @Path("/{id}")
-    public Response updateCustomer(@PathParam("id") String id) {
-        return Response.ok().build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCustomer(@PathParam("id") String id, Customer updatedCustomer) {
+        try {
+            Customer customer = customerDAO.updateCustomer(id, updatedCustomer);
+            return Response.ok(customer).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Customer not found").build();
+        }
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteCustomer(@PathParam("id") String id) {
-        return Response.noContent().build();
+        try {
+            customerDAO.deleteCustomer(id);
+            return Response.noContent().build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Customer not found").build();
+        }
     }
 }
