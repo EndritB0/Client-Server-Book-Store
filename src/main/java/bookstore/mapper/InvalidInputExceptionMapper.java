@@ -15,8 +15,9 @@ public class InvalidInputExceptionMapper implements ExceptionMapper<InvalidInput
 
     @Override
     public Response toResponse(InvalidInputException exception) {
+        ErrorMessage error = new ErrorMessage("Invalid Input", exception.getMessage());
         return Response.status(Response.Status.BAD_REQUEST)
-                .entity("{\"error\": \"Invalid Input\", \"message\": \"" + exception.getMessage() + "\"}")
+                .entity(error)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }

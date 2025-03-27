@@ -15,8 +15,9 @@ public class BookNotFoundExceptionMapper implements ExceptionMapper<BookNotFound
 
     @Override
     public Response toResponse(BookNotFoundException exception) {
+        ErrorMessage error = new ErrorMessage("Book not found", exception.getMessage());
         return Response.status(Response.Status.NOT_FOUND)
-                .entity("{\"error\": \"Book not found\", \"message\": \"" + exception.getMessage() + "\"}")
+                .entity(error)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }

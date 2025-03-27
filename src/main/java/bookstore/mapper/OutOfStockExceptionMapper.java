@@ -15,8 +15,9 @@ public class OutOfStockExceptionMapper implements ExceptionMapper<OutOfStockExce
 
     @Override
     public Response toResponse(OutOfStockException exception) {
+        ErrorMessage error = new ErrorMessage("Out of Stock", exception.getMessage());
         return Response.status(Response.Status.CONFLICT)
-                .entity("{\"error\": \"Out of Stock\", \"message\": \"" + exception.getMessage() + "\"}")
+                .entity(error)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }

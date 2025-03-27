@@ -15,8 +15,9 @@ public class CartNotFoundExceptionMapper implements ExceptionMapper<CartNotFound
 
     @Override
     public Response toResponse(CartNotFoundException exception) {
+        ErrorMessage error = new ErrorMessage("Cart Not Found", exception.getMessage());
         return Response.status(Response.Status.NOT_FOUND)
-                .entity("{\"error\": \"Cart Not Found\", \"message\": \"" + exception.getMessage() + "\"}")
+                .entity(error)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }

@@ -74,7 +74,7 @@ public class OrderDAO {
             updatedBook.setStock(updatedBook.getStock() - item.getQuantity());
             bookDAO.updateBook(updatedBook.getId(), updatedBook);
         }
-        
+
         Order order = new Order(
                 UUID.randomUUID().toString(),
                 new ArrayList<>(cart.getItems().values()),

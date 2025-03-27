@@ -15,8 +15,9 @@ public class AuthorNotFoundExceptionMapper implements ExceptionMapper<AuthorNotF
 
     @Override
     public Response toResponse(AuthorNotFoundException exception) {
+        ErrorMessage error = new ErrorMessage("Author not found", exception.getMessage());
         return Response.status(Response.Status.NOT_FOUND)
-                .entity("{\"error\": \"Author not found\", \"message\": \"" + exception.getMessage() + "\"}")
+                .entity(error)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }

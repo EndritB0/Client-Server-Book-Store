@@ -15,8 +15,9 @@ public class OrderNotFoundExceptionMapper implements ExceptionMapper<OrderNotFou
 
     @Override
     public Response toResponse(OrderNotFoundException exception) {
+        ErrorMessage error = new ErrorMessage("Order not found", exception.getMessage());
         return Response.status(Response.Status.NOT_FOUND)
-                .entity("{\"error\": \"Order not found\", \"message\": \"" + exception.getMessage() + "\"}")
+                .entity(error)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }

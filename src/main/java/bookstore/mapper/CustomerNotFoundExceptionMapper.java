@@ -15,8 +15,9 @@ public class CustomerNotFoundExceptionMapper implements ExceptionMapper<Customer
 
     @Override
     public Response toResponse(CustomerNotFoundException exception) {
+        ErrorMessage error = new ErrorMessage("Customer not found", exception.getMessage());
         return Response.status(Response.Status.NOT_FOUND)
-                .entity("{\"error\": \"Customer not found\", \"message\": \"" + exception.getMessage() + "\"}")
+                .entity(error)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }
