@@ -35,9 +35,9 @@ public class BookDAO {
     }
 
     public Book createBook(Book book) {
-        if (book.getTitle() == null || book.getAuthor() == null
+        if (book.getTitle() == null || book.getAuthor() == null || book.getAuthor().getId() == null
                 || book.getPrice() == null || book.getStock() == null) {
-            throw new InvalidInputException("Title, author, price, and stock must all be provided.");
+            throw new InvalidInputException("Title, author, author ID, price, and stock must all be provided.");
         }
 
         AuthorDAO authorDAO = new AuthorDAO();
