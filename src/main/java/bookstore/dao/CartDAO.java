@@ -112,10 +112,10 @@ public class CartDAO {
         // Checks if the Book is already in the Cart
         if (cart.getItems().containsKey(book.getId())) {
             // Gets the total Quantity requested and checks if its smaller than Book Stock amount
-            // Throws InvalidInputException if requested amount is larger than stocks amount
+            // Throws OutOfStockException if requested amount is larger than stocks amount
             int totalQuantity = cart.getItems().get(book.getId()).getQuantity() + requestedQuantity;
             if (totalQuantity > currentStock) {
-                throw new InvalidInputException("Total quantity exceeds available stock for book with ID: " + book.getId());
+                throw new OutOfStockException("Total quantity exceeds available stock for book with ID: " + book.getId());
             }
 
             // Updates Cart with the new requested amount
@@ -168,9 +168,9 @@ public class CartDAO {
         // Checks if the Book is already in the Cart
         if (cart.getItems().containsKey(bookId)) {
             // Checks if the new quantity is smaller than Book Stock amount
-            // Throws InvalidInputException if requested amount is larger than stocks amount
+            // Throws OutOfStockException if requested amount is larger than stocks amount
             if (quantity > bookDAO.getBookById(bookId).getStock()) {
-                throw new InvalidInputException("Quantity exceeds available stock for book with ID: " + bookId);
+                throw new OutOfStockException("Quantity exceeds available stock for book with ID: " + bookId);
             }
 
             // Updates Cart with the new requested amount
