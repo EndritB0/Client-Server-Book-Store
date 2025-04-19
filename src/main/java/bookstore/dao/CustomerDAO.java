@@ -14,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CustomerDAO {
 
+    // Concurrent HashMap that holds all customers in memory
+    // Key: Customer ID, Value: Customer Object
     private static ConcurrentHashMap<String, Customer> customers = new ConcurrentHashMap<>();
 
     static {
@@ -21,42 +23,61 @@ public class CustomerDAO {
 //        customers.put(customer.getId(), customer);
     }
 
+    // Returns all Customers in an ArrayList
     public List<Customer> getAllCustomers() {
         return new ArrayList<>(customers.values());
     }
 
+    // Finds Customer by ID
+    // Returns Customer Object
     public Customer getCustomerById(String id) {
+        // Validate if Customer with ID exists
+        // Throws CustomerNotFoundException if customer doesn't exist
         Customer customer = customers.get(id);
         if (customer == null) {
             throw new CustomerNotFoundException("Customer not found with ID: " + id);
         }
+
         return customer;
     }
 
+    // Creates a new Customer and stores it in the HashMap
+    // Returns new Customer Object
     public Customer createCustomer(Customer customer) {
+        // Validates all required fields are provided
+        // Throws InvalidInputException if any field is missing
         if (customer.getName() == null || customer.getEmail() == null) {
             throw new InvalidInputException("Customer name and email must both be provided.");
         }
 
+        // Generate a unigue ID and save Customer
         customer.setId(UUID.randomUUID().toString());
         customers.put(customer.getId(), customer);
 
+        // Create an empty Cart for Customer
         CartDAO cartDAO = new CartDAO();
         cartDAO.createCartforCustomer(customer.getId());
 
         return customer;
     }
 
+    // Updates an existing Customer's information
+    // Returns updated Customer Object
     public Customer updateCustomer(String id, Customer updatedCustomer) {
+        // Validates at least one field is provided
+        // Throws InvalidInputException if all fields are missing
         if (updatedCustomer.getName() == null && updatedCustomer.getEmail() == null) {
             throw new InvalidInputException("At least one field (name or email) must be provided.");
         }
 
+        // Validate if Customer with ID exists
+        // Throws CustomerNotFoundException if customer doesn't exist
         Customer customer = customers.get(id);
         if (customer == null) {
             throw new CustomerNotFoundException("Customer not found with ID: " + id);
         }
 
+        // Updated each field if provided
         if (updatedCustomer.getName() != null) {
             customer.setName(updatedCustomer.getName());
         }
@@ -64,18 +85,26 @@ public class CustomerDAO {
             customer.setEmail(updatedCustomer.getEmail());
         }
 
+        // Saves updated Customer Object
         customers.put(customer.getId(), customer);
+
         return customer;
     }
 
+    // Deletes Customer from the Map
     public void deleteCustomer(String id) {
+        // Validate if Customer with ID exists
+        // Throws CustomerNotFoundException if customer doesn't exist
         if (!customers.containsKey(id)) {
             throw new CustomerNotFoundException("Customer not found with ID: " + id);
         }
 
+        // Removes Customer from the Map
         customers.remove(id);
     }
 
+    // Checks if a Customer ID exists in the Map, used for other DAOs
+    // Returns boolean value
     public boolean validCustomer(String id) {
         return customers.containsKey(id);
     }
