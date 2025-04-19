@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 @Provider
 public class AuthorNotFoundExceptionMapper implements ExceptionMapper<AuthorNotFoundException> {
 
+    // Exception mapper that converts AuthorNotFoundException to HTTP responses
+    // Returns 404 Not Found status with error details in JSON format
     private static final Logger logger = LoggerFactory.getLogger(AuthorNotFoundExceptionMapper.class);
 
     @Override

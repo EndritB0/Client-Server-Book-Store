@@ -11,16 +11,18 @@ public class Book {
     private Author author;
     private Double price;
     private Integer stock;
+    private Integer publicationYear;
 
     public Book() {
     }
 
-    public Book(String id, String title, Author author, double price, int stock) {
+    public Book(String id, String title, Author author, Double price, Integer stock, Integer publicationYear) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.price = price;
         this.stock = stock;
+        this.publicationYear = publicationYear;
     }
 
     public String getId() {
@@ -62,4 +64,13 @@ public class Book {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
+
+    public Integer getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(Integer publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
 }

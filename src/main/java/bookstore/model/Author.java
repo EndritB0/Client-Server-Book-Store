@@ -8,13 +8,15 @@ public class Author {
 
     private String id;
     private String name;
+    private String biography;
 
     public Author() {
     }
 
-    public Author(String id, String name) {
+    public Author(String id, String name, String biography) {
         this.id = id;
         this.name = name;
+        this.biography = biography;
     }
 
     public String getId() {
@@ -32,4 +34,13 @@ public class Author {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
 }

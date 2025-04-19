@@ -5,6 +5,7 @@ package bookstore.mapper;
  * @author Endrit Brahimi
  */
 public class ErrorMessage {
+    // Used as to store the error and its message to format to JSON
 
     private String error;
     private String message;

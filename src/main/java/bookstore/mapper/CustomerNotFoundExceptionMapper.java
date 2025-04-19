@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 @Provider
 public class CustomerNotFoundExceptionMapper implements ExceptionMapper<CustomerNotFoundException> {
 
+    // Exception mapper that converts CustomerNotFoundException to HTTP responses
+    // Returns 404 Not Found status with error details in JSON format
     private static final Logger logger = LoggerFactory.getLogger(CustomerNotFoundExceptionMapper.class);
 
     @Override

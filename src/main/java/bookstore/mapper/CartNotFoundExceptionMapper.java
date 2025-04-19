@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 @Provider
 public class CartNotFoundExceptionMapper implements ExceptionMapper<CartNotFoundException> {
 
+    // Exception mapper that converts CartNotFoundException to HTTP responses
+    // Returns 404 Not Found status with error details in JSON format
     private static final Logger logger = LoggerFactory.getLogger(CartNotFoundExceptionMapper.class);
 
     @Override

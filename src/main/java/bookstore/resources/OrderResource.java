@@ -30,7 +30,7 @@ public class OrderResource {
     public Response createOrder(@PathParam("customerId") String id) {
         // Calls DAO to create order from customer's cart
         Order order = orderDAO.createOrderFromCustomer(id);
-        
+
         // Returns 201 Created Status
         // With the new Order Object
         return Response.status(Response.Status.CREATED).entity(order).build();
@@ -43,7 +43,7 @@ public class OrderResource {
     public Response getAllOrdersByCustomer(@PathParam("customerId") String id) {
         // Calls DAO to get all orders for customer
         List<Order> orders = orderDAO.getAllOrdersByCustomer(id);
-        
+
         // Returns 200 OK status
         // With all Orders
         return Response.ok(orders).build();
@@ -59,7 +59,7 @@ public class OrderResource {
             @PathParam("orderId") String orderId) {
         // Calls DAO to get specific order
         Order order = orderDAO.getOrderByCustomerId(customerId, orderId);
-        
+
         // Returns 200 OK status
         // With the Order Object
         return Response.ok(order).build();

@@ -31,7 +31,7 @@ public class CustomerResource {
     public Response createCustomer(Customer newCustomer) {
         // Calls DAO to create new customer
         Customer customer = customerDAO.createCustomer(newCustomer);
-        
+
         // Returns 201 Created Status
         // With the new Customer Object
         return Response.status(Response.Status.CREATED).entity(customer).build();
@@ -56,7 +56,7 @@ public class CustomerResource {
     public Response getCustomerById(@PathParam("id") String id) {
         // Calls DAO to get customer by ID
         Customer customer = customerDAO.getCustomerById(id);
-        
+
         // Returns 200 OK status
         // With the Customer Object
         return Response.ok(customer).build();
@@ -71,7 +71,7 @@ public class CustomerResource {
     public Response updateCustomer(@PathParam("id") String id, Customer updatedCustomer) {
         // Calls DAO to update customer
         Customer customer = customerDAO.updateCustomer(id, updatedCustomer);
-        
+
         // Returns 200 OK status
         // With the updated Customer Object
         return Response.ok(customer).build();
@@ -83,7 +83,7 @@ public class CustomerResource {
     public Response deleteCustomer(@PathParam("id") String id) {
         // Calls DAO to delete customer
         customerDAO.deleteCustomer(id);
-        
+
         // Returns 204 No Content status
         return Response.noContent().build();
     }

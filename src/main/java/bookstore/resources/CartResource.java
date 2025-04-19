@@ -33,7 +33,7 @@ public class CartResource {
     public Response addItemToCart(@PathParam("customerId") String id, Item item) {
         // Calls DAO to add item to customer's cart
         Cart cart = cartDAO.addItemToCart(id, item);
-        
+
         // Returns 201 Created Status
         // With the added Item to the Cart
         return Response.status(Response.Status.CREATED).entity(cart).build();
@@ -46,7 +46,7 @@ public class CartResource {
     public Response getCart(@PathParam("customerId") String id) {
         // Calls DAO to get customer's cart
         Cart cart = cartDAO.getCartByCustomerId(id);
-        
+
         // Returns 200 OK status
         // With Cart object
         return Response.ok(cart).build();
@@ -64,7 +64,7 @@ public class CartResource {
             Integer quantity) {
         // Calls DAO to update item quantity
         Cart cart = cartDAO.updateItemInCart(customerId, bookId, quantity);
-        
+
         // Returns 200 OK status
         // With the updated Cart Object
         return Response.ok(cart).build();
@@ -78,7 +78,7 @@ public class CartResource {
             @PathParam("bookId") String bookId) {
         // Calls DAO to remove item from cart
         cartDAO.deleteItemInCart(customerId, bookId);
-        
+
         // Returns 204 No Content status
         return Response.noContent().build();
     }

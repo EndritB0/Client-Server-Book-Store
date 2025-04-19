@@ -9,6 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Cart {
 
     private Customer customer;
+    // Concurrent HashMap that holds the book and its quantity in the cart
+    // Key: Book ID, Value: Item Object to hold the Book
     private ConcurrentHashMap<String, Item> items = new ConcurrentHashMap<>();
 
     public Cart() {

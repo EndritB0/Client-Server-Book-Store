@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 @Provider
 public class InvalidInputExceptionMapper implements ExceptionMapper<InvalidInputException> {
 
+    // Exception mapper that converts InvalidInputException to HTTP 400 responses
+    // Handles invalid input when provided 
     private static final Logger logger = LoggerFactory.getLogger(InvalidInputExceptionMapper.class);
 
     @Override

@@ -46,8 +46,9 @@ public class CustomerDAO {
     public Customer createCustomer(Customer customer) {
         // Validates all required fields are provided
         // Throws InvalidInputException if any field is missing
-        if (customer.getName() == null || customer.getEmail() == null) {
-            throw new InvalidInputException("Customer name and email must both be provided.");
+        if (customer.getName() == null || customer.getEmail() == null
+                || customer.getPassword() == null) {
+            throw new InvalidInputException("Customer name, email and password must all be provided.");
         }
 
         // Generate a unigue ID and save Customer
@@ -66,8 +67,9 @@ public class CustomerDAO {
     public Customer updateCustomer(String id, Customer updatedCustomer) {
         // Validates at least one field is provided
         // Throws InvalidInputException if all fields are missing
-        if (updatedCustomer.getName() == null && updatedCustomer.getEmail() == null) {
-            throw new InvalidInputException("At least one field (name or email) must be provided.");
+        if (updatedCustomer.getName() == null && updatedCustomer.getEmail() == null
+                && updatedCustomer.getPassword() == null) {
+            throw new InvalidInputException("At least one field (name, email or password) must be provided.");
         }
 
         // Validate if Customer with ID exists
@@ -83,6 +85,9 @@ public class CustomerDAO {
         }
         if (updatedCustomer.getEmail() != null) {
             customer.setEmail(updatedCustomer.getEmail());
+        }
+        if (updatedCustomer.getPassword() != null) {
+            customer.setPassword(updatedCustomer.getPassword());
         }
 
         // Saves updated Customer Object

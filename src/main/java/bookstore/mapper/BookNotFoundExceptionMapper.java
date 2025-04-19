@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 @Provider
 public class BookNotFoundExceptionMapper implements ExceptionMapper<BookNotFoundException> {
 
+    // Exception mapper that converts BookNotFoundException to HTTP responses
+    // Returns 404 Not Found status with error details in JSON format
     private static final Logger logger = LoggerFactory.getLogger(BookNotFoundExceptionMapper.class);
 
     @Override

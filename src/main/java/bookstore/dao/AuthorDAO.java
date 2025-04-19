@@ -49,8 +49,8 @@ public class AuthorDAO {
     public Author createAuthor(Author author) {
         // Checks if Author name is provided
         // Throws InvalidInputException if nothing is provided
-        if (author.getName() == null) {
-            throw new InvalidInputException("Author name cannot be null or empty.");
+        if (author.getName() == null || author.getBiography() == null) {
+            throw new InvalidInputException("Author name and biography must both be provided.");
         }
 
         // Generate a unigue ID
@@ -66,8 +66,8 @@ public class AuthorDAO {
     public Author updateAuthor(String id, Author updatedAuthor) {
         // Validate if new Author's inforamtion is valid
         // Throws InvalidInputException if nothing is provided
-        if (updatedAuthor.getName() == null) {
-            throw new InvalidInputException("Author name cannot be null or empty.");
+        if (updatedAuthor.getName() == null && updatedAuthor.getBiography() == null) {
+            throw new InvalidInputException("At least one field (name or biography) must be provided.");
         }
 
         // Validate if Author with ID exists
@@ -80,6 +80,9 @@ public class AuthorDAO {
         // Update Author's Information
         if (updatedAuthor.getName() != null) {
             author.setName(updatedAuthor.getName());
+        }
+        if (updatedAuthor.getBiography() != null) {
+            author.setBiography(updatedAuthor.getBiography());
         }
 
         // Saves updated Author Object

@@ -50,8 +50,8 @@ public class BookDAO {
         // Validates all required fields are provided
         // Throws InvalidInputException if any field is missing
         if (book.getTitle() == null || book.getAuthor() == null || book.getAuthor().getId() == null
-                || book.getPrice() == null || book.getStock() == null) {
-            throw new InvalidInputException("Title, author, author ID, price, and stock must all be provided.");
+                || book.getPrice() == null || book.getStock() == null || book.getPublicationYear() == null) {
+            throw new InvalidInputException("Title, author, author ID, price, stock and publication year must all be provided.");
         }
 
         // Validate if Author with ID exists
@@ -68,7 +68,7 @@ public class BookDAO {
 
         // Stores new Book in the Map
         books.put(book.getId(), book);
-        
+
         return book;
     }
 
@@ -121,10 +121,13 @@ public class BookDAO {
 
             book.setStock(updatedBook.getStock());
         }
+        if (updatedBook.getPublicationYear() != null) {
+            book.setPublicationYear(updatedBook.getPublicationYear());
+        }
 
         // Saves updated Book Object
         books.put(book.getId(), book);
-        
+
         return book;
     }
 
