@@ -11,6 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,6 +20,9 @@ import javax.ws.rs.core.Response;
  */
 @Path("/customers/{customerId}/orders")
 public class OrderResource {
+    
+    // Logger to log program activites
+    private static final Logger logger = LoggerFactory.getLogger(OrderResource.class);
 
     // OrderDAO instance for order operations
     OrderDAO orderDAO = new OrderDAO();
@@ -30,6 +35,7 @@ public class OrderResource {
     public Response createOrder(@PathParam("customerId") String id) {
         // Calls DAO to create order from customer's cart
         Order order = orderDAO.createOrderFromCustomer(id);
+        logger.info("Created new order from cart from customer with ID: {}", id);
 
         // Returns 201 Created Status
         // With the new Order Object
@@ -43,6 +49,7 @@ public class OrderResource {
     public Response getAllOrdersByCustomer(@PathParam("customerId") String id) {
         // Calls DAO to get all orders for customer
         List<Order> orders = orderDAO.getAllOrdersByCustomer(id);
+        logger.info("Retrieved all orders by customer with ID: {}", id);
 
         // Returns 200 OK status
         // With all Orders
@@ -59,6 +66,7 @@ public class OrderResource {
             @PathParam("orderId") String orderId) {
         // Calls DAO to get specific order
         Order order = orderDAO.getOrderByCustomerId(customerId, orderId);
+        logger.info("Retrieved order with ID: {} by customer with ID: {}", orderId, customerId);
 
         // Returns 200 OK status
         // With the Order Object

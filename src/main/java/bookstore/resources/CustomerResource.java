@@ -1,5 +1,6 @@
 package bookstore.resources;
 
+import bookstore.dao.BookDAO;
 import bookstore.dao.CustomerDAO;
 import bookstore.model.Customer;
 import javax.ws.rs.Consumes;
@@ -12,6 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,6 +22,9 @@ import javax.ws.rs.core.Response;
  */
 @Path("/customers")
 public class CustomerResource {
+    
+    // Logger to log program activites
+    private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
 
     // CustomerDAO instance for customer operations
     CustomerDAO customerDAO = new CustomerDAO();
@@ -31,6 +37,7 @@ public class CustomerResource {
     public Response createCustomer(Customer newCustomer) {
         // Calls DAO to create new customer
         Customer customer = customerDAO.createCustomer(newCustomer);
+        logger.info("Created new customer with ID: {}", customer.getId());
 
         // Returns 201 Created Status
         // With the new Customer Object
@@ -45,6 +52,7 @@ public class CustomerResource {
         // Calls DAO to get all customers
         // Returns 200 OK status
         // With all Customer Objects
+        logger.info("Retrieved all customers");
         return Response.ok(customerDAO.getAllCustomers()).build();
     }
 
@@ -56,6 +64,7 @@ public class CustomerResource {
     public Response getCustomerById(@PathParam("id") String id) {
         // Calls DAO to get customer by ID
         Customer customer = customerDAO.getCustomerById(id);
+        logger.info("Retrieved customer with ID: {}", id);
 
         // Returns 200 OK status
         // With the Customer Object
@@ -71,6 +80,7 @@ public class CustomerResource {
     public Response updateCustomer(@PathParam("id") String id, Customer updatedCustomer) {
         // Calls DAO to update customer
         Customer customer = customerDAO.updateCustomer(id, updatedCustomer);
+        logger.info("Updated customer with ID: {}", id);
 
         // Returns 200 OK status
         // With the updated Customer Object
@@ -83,6 +93,7 @@ public class CustomerResource {
     public Response deleteCustomer(@PathParam("id") String id) {
         // Calls DAO to delete customer
         customerDAO.deleteCustomer(id);
+        logger.info("Deleted customer with ID: {}", id);
 
         // Returns 204 No Content status
         return Response.noContent().build();

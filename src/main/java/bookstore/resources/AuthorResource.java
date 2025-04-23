@@ -14,6 +14,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,6 +23,9 @@ import javax.ws.rs.core.Response;
  */
 @Path("/authors")
 public class AuthorResource {
+
+    // Logger to log program activites
+    private static final Logger logger = LoggerFactory.getLogger(AuthorResource.class);
 
     // AuthorDAO instance for author operations
     private AuthorDAO authorDAO = new AuthorDAO();
@@ -33,6 +38,7 @@ public class AuthorResource {
     public Response createAuthor(Author newAuthor) {
         // Calls DAO to create a new Author Object
         Author author = authorDAO.createAuthor(newAuthor);
+        logger.info("Created new author with ID: {}", author.getId());
 
         // Returns 201 Created Status
         // With the new Author Object
@@ -47,6 +53,7 @@ public class AuthorResource {
         // Calls DAO to get all Authors
         // Returns 200 OK status
         // With all Author Objects
+        logger.info("Retrieved all authors");
         return Response.ok(authorDAO.getAllAuthors()).build();
     }
 
@@ -58,6 +65,7 @@ public class AuthorResource {
     public Response getAuthorById(@PathParam("id") String id) {
         // Calls DAO to get Author by ID
         Author author = authorDAO.getAuthorById(id);
+        logger.info("Retrieved author with ID: {}", id);
 
         // Returns 200 OK status
         // With the Author Object
@@ -73,6 +81,7 @@ public class AuthorResource {
     public Response updateAuthor(@PathParam("id") String id, Author updatedAuthor) {
         // Calls DAO to update Author by ID
         Author author = authorDAO.updateAuthor(id, updatedAuthor);
+        logger.info("Updated author with ID: {}", id);
 
         // Returns 200 OK status
         // With the updated Author Object
@@ -85,6 +94,7 @@ public class AuthorResource {
     public Response deleteAuthor(@PathParam("id") String id) {
         // Calls DAO to delete Author by ID
         authorDAO.deleteAuthor(id);
+        logger.info("Deleted author with ID: {}", id);
 
         // Returns 204 No Content status
         return Response.noContent().build();
@@ -98,6 +108,7 @@ public class AuthorResource {
     public Response getBooksByAuthor(@PathParam("id") String id) {
         // Calls DAO to get the books written by Author
         List<Book> books = authorDAO.getBooksByAuthor(id);
+        logger.info("Retrieved all books by author with ID: {}", id);
 
         // Returns 200 OK status
         // With the ArrayList of Books

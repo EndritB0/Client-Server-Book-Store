@@ -12,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,6 +21,9 @@ import javax.ws.rs.core.Response;
  */
 @Path("/books")
 public class BookResource {
+
+    // Logger to log program activites
+    private static final Logger logger = LoggerFactory.getLogger(BookResource.class);
 
     // BookDAO instance for book operations
     BookDAO bookDAO = new BookDAO();
@@ -31,6 +36,7 @@ public class BookResource {
     public Response createBook(Book newBook) {
         // Calls DAO to create new Book
         Book book = bookDAO.createBook(newBook);
+        logger.info("Created new book with ID: {}", book.getId());
 
         // Returns 201 Created Status
         // With the new Book Object
@@ -45,6 +51,7 @@ public class BookResource {
         // Calls DAO to get all Books
         // Returns 200 OK status
         // With all Book Objects
+        logger.info("Retrieved all books");
         return Response.ok(bookDAO.getAllBooks()).build();
     }
 
@@ -56,6 +63,7 @@ public class BookResource {
     public Response getBookById(@PathParam("id") String id) {
         // Calls DAO to get Book by ID
         Book book = bookDAO.getBookById(id);
+        logger.info("Retrieved book with ID: {}", id);
 
         // Returns 200 OK status
         // With the Book Object
@@ -71,6 +79,7 @@ public class BookResource {
     public Response updateBook(@PathParam("id") String id, Book updatedBook) {
         // Calls DAO to update Book
         Book book = bookDAO.updateBook(id, updatedBook);
+        logger.info("Updated book with ID: {}", id);
 
         // Returns 200 OK status
         // With the updated Book Object
@@ -83,6 +92,7 @@ public class BookResource {
     public Response deleteBook(@PathParam("id") String id) {
         // Calls DAO to delete Book
         bookDAO.deleteBook(id);
+        logger.info("Deleted book with ID: {}", id);
 
         // Returns 204 No Content status
         return Response.noContent().build();
