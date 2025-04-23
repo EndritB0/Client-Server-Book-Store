@@ -7,6 +7,7 @@ package bookstore.model;
 public class Book {
 
     private String id;
+    private String isbn;
     private String title;
     private Author author;
     private Double price;
@@ -16,8 +17,9 @@ public class Book {
     public Book() {
     }
 
-    public Book(String id, String title, Author author, Double price, Integer stock, Integer publicationYear) {
+    public Book(String id, String isbn, String title, Author author, Double price, Integer stock, Integer publicationYear) {
         this.id = id;
+        this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.price = price;
@@ -71,6 +73,14 @@ public class Book {
 
     public void setPublicationYear(Integer publicationYear) {
         this.publicationYear = publicationYear;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
 }
