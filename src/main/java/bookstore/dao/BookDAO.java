@@ -41,7 +41,7 @@ public class BookDAO {
         if (book == null) {
             throw new BookNotFoundException("Book not found with ID: " + id);
         }
-        
+
         return book;
     }
 
@@ -51,6 +51,15 @@ public class BookDAO {
         // Throws InvalidInputException if any field is missing
         if (book.getTitle() == null || book.getIsbn() == null || book.getAuthor() == null || book.getAuthor().getId() == null || book.getPrice() == null || book.getStock() == null || book.getPublicationYear() == null) {
             throw new InvalidInputException("Title, isbn, author, author ID, price, stock and publication year must all be provided.");
+        }
+
+        // Validate that Stock and Price are not negative
+        // Throws InvalidInputException if negative
+        if (book.getPrice() < 0) {
+            throw new InvalidInputException("Price cannot be negative.");
+        }
+        if (book.getStock() < 0) {
+            throw new InvalidInputException("Stock cannot be negative.");
         }
 
         // Validate if Author with ID exists
@@ -67,7 +76,7 @@ public class BookDAO {
 
         // Stores new Book in the Map
         books.put(book.getId(), book);
-        
+
         return book;
     }
 
@@ -91,7 +100,7 @@ public class BookDAO {
         if (updatedBook.getTitle() != null) {
             book.setTitle(updatedBook.getTitle());
         }
-        if (updatedBook.getTitle() != null) {
+        if (updatedBook.getIsbn() != null) {
             book.setIsbn(updatedBook.getIsbn());
         }
         if (updatedBook.getAuthor() != null) {
@@ -101,7 +110,7 @@ public class BookDAO {
             if (!authorDAO.validAuthor(updatedBook.getAuthor().getId())) {
                 throw new AuthorNotFoundException("Author not found with ID: " + updatedBook.getAuthor().getId());
             }
-            
+
             book.setAuthor(authorDAO.getAuthorById(updatedBook.getAuthor().getId()));
         }
         if (updatedBook.getPrice() != null) {
@@ -110,7 +119,7 @@ public class BookDAO {
             if (updatedBook.getPrice() < 0) {
                 throw new InvalidInputException("Price cannot be negative.");
             }
-            
+
             book.setPrice(updatedBook.getPrice());
         }
         if (updatedBook.getStock() != null) {
@@ -119,7 +128,7 @@ public class BookDAO {
             if (updatedBook.getStock() < 0) {
                 throw new InvalidInputException("Stock cannot be negative.");
             }
-            
+
             book.setStock(updatedBook.getStock());
         }
         if (updatedBook.getPublicationYear() != null) {
@@ -128,7 +137,7 @@ public class BookDAO {
 
         // Saves updated Book Object
         books.put(book.getId(), book);
-        
+
         return book;
     }
 
