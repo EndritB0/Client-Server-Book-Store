@@ -1,5 +1,6 @@
 package bookstore.mapper;
 
+import bookstore.message.ErrorMessage;
 import bookstore.exception.AuthorNotFoundException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

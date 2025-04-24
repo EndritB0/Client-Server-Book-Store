@@ -1,4 +1,4 @@
-package bookstore.mapper;
+package bookstore.message;
 
 /**
  *
