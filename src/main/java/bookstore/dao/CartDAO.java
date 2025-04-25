@@ -71,7 +71,7 @@ public class CartDAO {
         // Throws InvalidInputException if any field is missing
         if (item == null || item.getBook() == null || item.getBook().getId() == null
                 || item.getQuantity() == null) {
-            throw new InvalidInputException("Item, book, book ID, and quantity must all be provided.");
+            throw new InvalidInputException("Book ID and quantity both must be provided.");
         }
 
         // Validate if Book with book ID exists
@@ -152,9 +152,11 @@ public class CartDAO {
             throw new BookNotFoundException("Book not found with ID: " + bookId);
         }
 
-        // Validate if quantity isn't smaller than 0 and not null
-        // Throws BookNotFoundException if quantity larger or equal to 0 or null
-        if (quantity == null || quantity <= 0) {
+        // Validate if quantity is greater than 0 and not null
+        // Throws InvalidInputException if quantity larger or equal to 0 or null
+        if (quantity == null) {
+            throw new InvalidInputException("Quantity must not be null.");
+        } else if (quantity <= 0) {
             throw new InvalidInputException("Quantity must be greater than zero.");
         }
 
